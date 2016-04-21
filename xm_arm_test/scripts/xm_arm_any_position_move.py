@@ -63,7 +63,6 @@ class TestArmPosition:
             keyboard_cmd = raw_input().split(" ")
             try:
                 if keyboard_cmd[0] == "joint":
-                    len(keyboard_cmd)
                     if (len(keyboard_cmd) - 1) == joint_dof:
                         joint_lift = float(keyboard_cmd[1])
                         joint_waist = float(keyboard_cmd[2])
