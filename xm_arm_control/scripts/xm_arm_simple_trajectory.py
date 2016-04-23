@@ -3,7 +3,7 @@
 /*********************************************************************
  *  Software License Agreement (BSD License)
  *
- *  Created for the XM Robot Project: http://www.github/xmproject
+ *  Created for the XM Robot Project: http://www.github.com/xmproject
  *  Copyright (c) 2015 The XM Robot Team. All rights reserved
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
 
 # Create Date: 2015.11.1
 
-# Authors: myyerrol  
+# Authors: myyerrol
 
 
 import rospy
@@ -51,18 +51,18 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 class ArmSimpleTrajectory:
     def __init__(self):
         rospy.init_node('arm_simple_trajectory')
-        
+
         # Set to True to move back to the starting configurations
         reset = rospy.get_param('~reset', False)
-        
+
         # Which joints define the arm?
         arm_joints = ['joint_lift',
                       'joint_waist',
-                      'joint_big_arm', 
+                      'joint_big_arm',
                       'joint_forearm',
                       'joint_wrist_pitching',
                       'joint_wrist_rotation']
-        
+
         if reset:
             # Set the arm back to the resting position
             arm_goal = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
@@ -70,18 +70,18 @@ class ArmSimpleTrajectory:
         else:
             # Set a goal configuration for the arm
             arm_goal = [1.0, 1.0, 1.0, 1.0, 0.0, 0.0]
-    
+
         # Connect to the right arm trajectory action server
         rospy.loginfo('Waiting for xm arm trajectory controller...')
-        
+
         arm_client = actionlib.SimpleActionClient('xm_arm_controller/follow_joint_trajectory',
                                                   FollowJointTrajectoryAction)
-        
+
         arm_client.wait_for_server()
-        
+
         rospy.loginfo('...connected.')
         rospy.sleep(1)
-    
+
         # Create a single-point arm trajectory with the arm_goal as the end-point
         arm_trajectory = JointTrajectory()
         arm_trajectory.joint_names = arm_joints
@@ -90,20 +90,20 @@ class ArmSimpleTrajectory:
         arm_trajectory.points[0].velocities = [0.0 for i in arm_joints]
         arm_trajectory.points[0].accelerations = [0.0 for i in arm_joints]
         arm_trajectory.points[0].time_from_start = rospy.Duration(3)
-    
+
         # Send the trajectory to the arm action server
         rospy.loginfo('Moving the arm to goal position...')
         rospy.sleep(1)
-        
+
         # Create an empty trajectory goal
         arm_goal = FollowJointTrajectoryGoal()
-        
+
         # Set the trajectory component to the goal trajectory created above
         arm_goal.trajectory = arm_trajectory
-        
+
         # Specify zero tolerance for the execution time
         arm_goal.goal_time_tolerance = rospy.Duration(0)
-    
+
         # Send the goal to the action server
         arm_client.send_goal(arm_goal)
 

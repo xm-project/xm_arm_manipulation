@@ -3,7 +3,7 @@
 /*********************************************************************
  *  Software License Agreement (BSD License)
  *
- *  Created for the XM Robot Project: http://www.github/xmproject
+ *  Created for the XM Robot Project: http://www.github.com/xmproject
  *  Copyright (c) 2015 The XM Robot Team. All rights reserved
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@
 
 # Create Date: 2015.11.1
 
-# Authors: myyerrol  
+# Authors: myyerrol
 
 
 import sys
